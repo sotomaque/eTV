@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Sidebar from './components/sidebar/sidebar.component';
-import MovieList from './components/movie-list/MovieList.component';
-import ShowsList from './components/shows-list/ShowsList.component';
+import Sidebar from '../../components/sidebar/sidebar.component';
+import MovieList from '../../components/movie-list/MovieList.component';
+import ShowsList from '../../components/shows-list/ShowsList.component';
 
 
 import './homepage.styles.scss';
 
 const HomePage = () => (
-    <div>
+    <div class="container">
         <main role="main">
             <div className="jumbotron">
                 <div className="container text-center">

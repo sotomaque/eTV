@@ -38,8 +38,8 @@ class ShowsList extends Component{
         
         return (
             <div>
-                <section className="container"><div className="title"><h2>Popular Series</h2></div>
-                    <div className="row showList display-flex">
+                <div className="title"><h2>Popular Series</h2></div>
+                    <div className="row showList">
                         {
                             this.state.shows && this.state.shows
                                 .filter((show, index) => index < 9)
@@ -61,7 +61,6 @@ class ShowsList extends Component{
                             })
                         }
                     </div>
-                </section>
             </div>
         );
     }

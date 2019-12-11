@@ -8,11 +8,9 @@ class MovieList extends Component{
     constructor(props){
         super(props);
         this.state ={
-            movies:[],
-            search:'popular'
+            movies:[]
         };
     }
-
 
     getMovie = () => {
         fetch("https://api.themoviedb.org/3/discover/movie?api_key=c9f3c719e4cce4a021ff37d2e89d43ba")
@@ -22,8 +20,6 @@ class MovieList extends Component{
                     movies: data.results
                 })
             })
-        
-            .then(() => console.log('state', this.state))
             .catch((err)=>{
                 console.error(err);
             })
@@ -35,37 +31,38 @@ class MovieList extends Component{
     
     render(){
         var baseUrl = "https://image.tmdb.org/t/p/original/";
-        
         return (
             <div>
-                <section className="container"><div className="title"><h2>Popular Movies</h2></div>
-                    <div className="row movieList display-flex">
+                <div className="title"><h2>Popular Movies</h2></div>
+                    <div className="row movieList">
                         {
                             this.state.movies && this.state.movies
                                 .filter((movie, index) => index < 9)
-                                .map((res, key) =>{
+                                .map(({original_title, poster_path, id}) => {
                                 return(
-                                    <div className="col-xs-6 col-md-4 movieBlock" key={key}>
-                                        <div className="panel panel-success">
-                                            <div className="panel-body">
-                                                <img alt={res.original_title} src={`${baseUrl}${res.poster_path}`} className="img-responsive"/> 
+                                    <div className="col-xs-6 col-md-4 movieBlock" key={id}>
+                                        <Link to={`/movies/${id}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                                            <div className="panel panel-success">
+                                                <div className="panel-body">
+                                                    <img alt={original_title} src={`${baseUrl}${poster_path}`} className="img-responsive"/> 
+                                                </div>
+                                                <div className="panel-heading">
+                                                    <h4 className="panel-title">
+                                                        {original_title}
+                                                    </h4>
+                                                </div>
                                             </div>
-                                            <div className="panel-heading">
-                                                <h4 className="panel-title">
-                                                    {res.original_title}
-                                                </h4>
-                                            </div>
-                                        </div>
+                                        </Link>
+                                        
                                     </div>
                                 )
                             })
                         }
                     </div>
-                </section>
             </div>
         );
     }
 }
 
 
-export default MovieList;
+export default (MovieList);
