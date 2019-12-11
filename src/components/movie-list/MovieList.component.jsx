@@ -8,20 +8,23 @@ class MovieList extends Component{
     constructor(props){
         super(props);
         this.state ={
-            movies:[]
+            movies:[],
+            search:'popular'
         };
     }
 
 
     getMovie = () => {
-        fetch(`https://www.omdbapi.com/?apikey=fa9a7315&s=alien&type=movie`)
+        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c9f3c719e4cce4a021ff37d2e89d43ba")
             .then((res)=> res.json())
-            .then((data)=>{
+            .then((data) => {
                 this.setState({
-                    movies:data.Search
-                });
-                console.log(this.state.movies)
-            }).catch((err)=>{
+                    movies: data.results
+                })
+            })
+        
+            .then(() => console.log('state', this.state))
+            .catch((err)=>{
                 console.error(err);
             })
     }
@@ -31,26 +34,29 @@ class MovieList extends Component{
     }
     
     render(){
+        var baseUrl = "https://image.tmdb.org/t/p/original/";
+        
         return (
             <div>
                 <section className="container"><div className="title"><h2>Popular Movies</h2></div>
                     <div className="row movieList display-flex">
                         {
-                            this.state.movies.map((res, key) =>{
+                            this.state.movies && this.state.movies
+                                .filter((movie, index) => index < 9)
+                                .map((res, key) =>{
                                 return(
                                     <div className="col-xs-6 col-md-4 movieBlock" key={key}>
                                         <div className="panel panel-success">
                                             <div className="panel-body">
-                                                <img alt={res.Title} src={res.Poster} className="img-responsive"/> 
+                                                <img alt={res.original_title} src={`${baseUrl}${res.poster_path}`} className="img-responsive"/> 
                                             </div>
                                             <div className="panel-heading">
                                                 <h4 className="panel-title">
-                                                    {res.Title}
+                                                    {res.original_title}
                                                 </h4>
                                             </div>
                                         </div>
                                     </div>
-                                
                                 )
                             })
                         }
