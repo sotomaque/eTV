@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StarRatingComponent from 'react-star-rating-component';
 
 import './movieDetail.styles.scss';
 
@@ -15,8 +16,10 @@ class MovieDetail extends Component {
             overview: '',
             popularity: '',
             releaseDate: '',
+            rating: '',
             baseUrl: "https://api.themoviedb.org/3/movie/",
             apiKey: "?api_key=c9f3c719e4cce4a021ff37d2e89d43ba",
+            voteCount: ''
         }
        
     }
@@ -34,7 +37,9 @@ class MovieDetail extends Component {
                     title: data.original_title,
                     overview:data.overview,
                     popularity: data.popularity,
-                    releaseDate: data.release_date
+                    releaseDate: data.release_date,
+                    rating: data.vote_average,
+                    voteCount: data.vote_count
                 })
             })
             .catch((err)=>{
@@ -57,8 +62,17 @@ class MovieDetail extends Component {
                         <hr/>
                         <p>Released on {this.state.releaseDate}</p>
                         <hr/>
-                        <img className="img-fluid rounded" src={`${base}${this.state.posterPath}`} alt={`${this.state.title}`} />
+                        <img className="img-responsive" src={`${base}${this.state.posterPath}`} alt={`${this.state.title}`} />
                         <hr/>
+                        <p>
+                            <StarRatingComponent
+                                name="rate2" 
+                                editing={false}
+                                starCount={10}
+                                value={this.state.rating}
+                             />
+                             <p>({this.state.rating} stars, out of {this.state.voteCount} votes) </p>
+                        </p>
                         <p className="lead">{this.state.overview}</p>
                     </div>
                     <div className="col-md-4">

@@ -8,7 +8,7 @@ import ShowsList from '../../components/shows-list/ShowsList.component';
 import './homepage.styles.scss';
 
 const HomePage = () => (
-    <div class="container">
+    <div>
         <main role="main">
             <div className="jumbotron">
                 <div className="container text-center">
